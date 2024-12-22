@@ -81,6 +81,11 @@ const sidebars = {
           label: "Local Development",
         },
         {
+          type: "doc",
+          id: "guides/voice-integration",
+          label: "Voice Integration",
+        },
+        {
             type: "doc",
             id: "guides/wsl",
             label: "WSL Setup",

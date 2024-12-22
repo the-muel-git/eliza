@@ -33,6 +33,10 @@ export default defineConfig({
                 changeOrigin: true,
                 rewrite: (path) => path.replace(/^\/api/, ""),
             },
+            "/agents": {
+                target: `http://localhost:${process.env.SERVER_PORT || 3000}`,
+                changeOrigin: true,
+            },
         },
     },
 });
