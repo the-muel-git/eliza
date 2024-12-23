@@ -3,7 +3,7 @@
 # Exit on error
 set -e
 
-echo "🚀 Starting deployment..."
+echo "🚀 Starting Discord bot deployment..."
 
 # Pull the latest changes from the main branch
 echo "📥 Pulling latest changes..."
@@ -23,8 +23,8 @@ if ! command -v pm2 &> /dev/null; then
     npm install -g pm2
 fi
 
-# Start/Restart the application using PM2
-echo "🔄 Starting/Restarting the application..."
-pm2 restart eliza || pm2 start "pnpm start" --name "eliza"
+# Start/Restart the Discord bot using PM2
+echo "🔄 Starting/Restarting Discord bot..."
+pm2 restart discord-bot || pm2 start "pnpm start --characters=\"characters/discord.json\"" --name "discord-bot"
 
-echo "✅ Deployment completed successfully!"
+echo "✅ Discord bot deployment completed successfully!"

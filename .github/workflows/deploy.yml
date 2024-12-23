@@ -1,4 +1,4 @@
-name: Deploy to DigitalOcean
+name: Deploy Discord Bot
 
 on:
   push:
@@ -9,7 +9,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to DigitalOcean Droplet
+      - name: Deploy to Discord Bot Droplet
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.DROPLET_IP }}
@@ -28,15 +28,20 @@ jobs:
             fi
 
             # Create and navigate to app directory if it doesn't exist
-            if [ ! -d "~/eliza" ]; then
-              git clone https://github.com/the-muel-git/eliza.git ~/eliza
+            if [ ! -d "~/discord-bot" ]; then
+              git clone https://github.com/the-muel-git/eliza.git ~/discord-bot
             fi
 
-            cd ~/eliza
+            cd ~/discord-bot
 
             # Reset any local changes and pull latest
             git fetch origin
             git reset --hard origin/main
+
+            # Copy environment file if it doesn't exist
+            if [ ! -f ".env" ]; then
+              cp .env.example .env
+            fi
 
             # Run the deployment script
             chmod +x ./scripts/deploy.sh
