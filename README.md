@@ -135,4 +135,4 @@ pnpm install --include=optional sharp
 [![Star History Chart](https://api.star-history.com/svg?repos=ai16z/eliza&type=Date)](https://star-history.com/#ai16z/eliza&Date)
 
 ## Test Deployment
-This is a test commit to trigger our GitHub Actions deployment.
+Testing automated deployment to DigitalOcean - [Timestamp: 2024-01-19]

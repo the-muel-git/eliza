@@ -1,0 +1,43 @@
+name: Deploy to DigitalOcean
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to DigitalOcean Droplet
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DROPLET_IP }}
+          username: ${{ secrets.DROPLET_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # Install Node.js if not installed
+            if ! command -v node &> /dev/null; then
+              curl -fsSL https://deb.nodesource.com/setup_23.x | sudo -E bash -
+              sudo apt-get install -y nodejs
+            fi
+
+            # Install pnpm if not installed
+            if ! command -v pnpm &> /dev/null; then
+              npm install -g pnpm@9.4.0
+            fi
+
+            # Create and navigate to app directory if it doesn't exist
+            if [ ! -d "~/eliza" ]; then
+              git clone https://github.com/the-muel-git/eliza.git ~/eliza
+            fi
+
+            cd ~/eliza
+
+            # Reset any local changes and pull latest
+            git fetch origin
+            git reset --hard origin/main
+
+            # Run the deployment script
+            chmod +x ./scripts/deploy.sh
+            ./scripts/deploy.sh
